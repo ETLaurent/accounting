@@ -15,7 +15,7 @@ positional arguments:
 optional arguments:
   -h, --help                              show this help message and exit
   -p [EXPENSE ...], --paid [EXPENSE ...]  expenses already paid
-  --pro                                   pro expenses
+  --pro                                   use expenses for a professional bank account balance
 ```
 
 ### Examples
