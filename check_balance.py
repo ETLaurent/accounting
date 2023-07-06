@@ -7,7 +7,6 @@ from functools import reduce
 pro = {
     "bank": 10,
     "internet": 30,
-    "mobile": 17
     # ...
 }
 
@@ -15,8 +14,6 @@ perso = {
     "rent": 850,
     "insurance": 60,
     "spotify": 10,
-    "water": 13,
-    "electricty": 63
     # ...
 }
 
