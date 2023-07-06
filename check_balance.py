@@ -2,20 +2,9 @@
 
 import sys
 import argparse
+
 from functools import reduce
-
-pro = {
-    "bank": 10,
-    "internet": 30,
-    # ...
-}
-
-perso = {
-    "rent": 850,
-    "insurance": 60,
-    "spotify": 10,
-    # ...
-}
+from expenses import professional as professional_expenses, personal as personal_expenses
 
 # --- CLI Arguments (not at the top in order to access expenses above for --paid argument choices)
 parser = argparse.ArgumentParser(
@@ -35,18 +24,18 @@ parser.add_argument(
         metavar='EXPENSE',
         nargs='*',
         default=[],
-        choices=pro.keys() if '--pro' in sys.argv else perso.keys()
+        choices=professional_expenses.keys() if '--pro' in sys.argv else personal_expenses.keys()
 )
 parser.add_argument(
         '--pro',
-        help ='pro expenses',
+        help ='use expenses for a professional bank account balance',
         action='store_true'
 )
 args = parser.parse_args()
 # ---
 
-# pro or perso
-expenses = pro if args.pro else perso
+# using professional or personal account
+expenses = professional_expenses if args.pro else personal_expenses
 
 print(f"expenses: {expenses}")
 print()
