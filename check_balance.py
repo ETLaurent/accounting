@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import sys
 import argparse
 from functools import reduce
