@@ -38,14 +38,6 @@ def parse_arguments():
     )
 
     parser.add_argument(
-        '-c',
-        '--current-balance',
-        help='current balance before expenses',
-        type=int,
-        nargs='?'
-    )
-
-    parser.add_argument(
         '-b',
         '--banks',
         help='which bank? (default: %(default)s)',
@@ -55,7 +47,6 @@ def parse_arguments():
 
     # Process known arguments first
     args, remaining_args = parser.parse_known_args()
-    print(args)
 
     # Calculate expenses based on selected banks
     expenses = get_expenses(args.banks)
@@ -69,6 +60,14 @@ def parse_arguments():
         nargs='*',
         default=[],
         choices=list(expenses.keys())
+    )
+
+    parser.add_argument(
+        '-c',
+        '--current-balance',
+        help='current balance before expenses',
+        type=int,
+        nargs='?'
     )
 
     # Parse the remaining arguments
