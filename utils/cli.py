@@ -3,6 +3,8 @@ import os
 import importlib
 import argparse
 
+sys.path.insert(0, './banks')
+
 def get_banks():
     files = [f for f in os.listdir('./banks') if f.endswith('.py')]
     banks = {}
@@ -13,48 +15,52 @@ def get_banks():
 
     return banks
 
+def get_expenses(selected_banks):
+    banks = get_banks()
+    expenses = {}
+
+    for bank in selected_banks:
+        if bank in banks:
+            for expense, amount in banks[bank].items():
+                if expense in expenses:
+                    # If the expense already exists, add the amount
+                    expenses[expense] += amount
+                else:
+                    expenses[expense] = amount
+
+    return expenses
 
 def parse_arguments():
-    available_banks = get_banks()
-    print(list(available_banks))
+    banks = get_banks()
 
-    # Initial parsing to get the selected banks
     parser = argparse.ArgumentParser(
         description='What\'s left in my balance after monthly expenses?'
     )
 
     parser.add_argument(
-        'balance',
-        help='current balance (default: %(default)s)',
+        '-c',
+        '--current-balance',
+        help='current balance before expenses',
         type=int,
-        nargs='?',
-        default=0
+        nargs='?'
     )
 
     parser.add_argument(
         '-b',
         '--banks',
-        help='which bank? (default %(default)s)',
+        help='which bank? (default: %(default)s)',
         nargs='+',
-        default=list(available_banks)
+        default=list(banks)
     )
 
-    # We need to parse once to get the banks argument
+    # Process known arguments first
     args, remaining_args = parser.parse_known_args()
+    print(args)
 
-    # Initialize an empty dictionary to store the combined expenses
-    selected_expenses = {}
+    # Calculate expenses based on selected banks
+    expenses = get_expenses(args.banks)
 
-    # Loop through the selected banks and add up expenses
-    for bank in args.banks:
-        if bank in available_banks:
-            for expense, amount in available_banks[bank].items():
-                if expense in selected_expenses:
-                    selected_expenses[expense] += amount  # Add to existing expense
-                else:
-                    selected_expenses[expense] = amount  # Create new entry
-
-    # Rebuild the parser with the updated `choices` for the `--paid` argument
+    # Rebuild parser with the `--paid` argument
     parser.add_argument(
         '-p',
         '--paid',
@@ -62,10 +68,10 @@ def parse_arguments():
         metavar='EXPENSE',
         nargs='*',
         default=[],
-        choices=list(selected_expenses.keys())
+        choices=list(expenses.keys())
     )
 
-    # Parse again with the full set of arguments
+    # Parse the remaining arguments
     args = parser.parse_args(remaining_args)
-    
-    return args, selected_expenses
+
+    return args, expenses
