@@ -10,14 +10,18 @@ from cli import parse_arguments
 args, expenses = parse_arguments()
 
 # Output expenses in a more readable way
+print('expenses:')
 for expense, amount in expenses.items():
-    print(f"{expense}: {math.ceil(amount)}€")
+    print(f"  {expense}: {math.ceil(amount)}€")
 
 # Remove already-paid expenses
-for expense in args.paid:
+if args.paid:
+    total_paid = sum(map(lambda paid: math.ceil(expenses[paid]), args.paid))
     print()
-    print(f"removing {expense} expense of {expenses[expense]}€")
-    expenses.pop(expense)
+    print(f"removing paid expenses for a total of {total_paid}€:")
+    for expense in args.paid:
+        print(f"  {expense}: {math.ceil(expenses[expense])}€")
+        expenses.pop(expense)
 
 # Calculate total expenses and current balance
 remaining_expenses = reduce(lambda x, value: x + math.ceil(value), expenses.values(), 0)
