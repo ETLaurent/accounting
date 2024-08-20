@@ -1,43 +1,14 @@
-import sys
-import os
-import importlib
 import argparse
+from banks import get_banks, get_expenses
 
-sys.path.insert(0, './banks')
-
-def get_banks():
-    files = [f for f in os.listdir('./banks') if f.endswith('.py')]
-    banks = {}
-
-    for file in files:
-        bank_name = file[:-3]  # Remove the '.py' extension
-        banks[bank_name] = importlib.import_module(bank_name).expenses
-
-    return banks
-
-def get_expenses(selected_banks):
-    banks = get_banks()
-    expenses = {}
-
-    for bank in selected_banks:
-        if bank in banks:
-            for expense, amount in banks[bank].items():
-                if expense in expenses:
-                    # If the expense already exists, add the amount
-                    expenses[expense] += amount
-                else:
-                    expenses[expense] = amount
-
-    return expenses
-
-def parse_arguments():
+def get_args():
     banks = get_banks()
 
-    parser = argparse.ArgumentParser(
+    initial_parser = argparse.ArgumentParser(
         description='What\'s left in my balance after monthly expenses?'
     )
 
-    parser.add_argument(
+    initial_parser.add_argument(
         '-b',
         '--banks',
         help='which bank? (default: %(default)s)',
@@ -46,13 +17,25 @@ def parse_arguments():
     )
 
     # Process known arguments first
-    args, remaining_args = parser.parse_known_args()
+    initial_args, unknown_args = initial_parser.parse_known_args()
 
     # Calculate expenses based on selected banks
-    expenses = get_expenses(args.banks)
+    expenses = get_expenses(initial_args.banks)
 
-    # Rebuild parser with the `--paid` argument
-    parser.add_argument(
+    # Create a new parser and add all arguments
+    final_parser = argparse.ArgumentParser(
+        description='What\'s left in my balance after monthly expenses?'
+    )
+
+    final_parser.add_argument(
+        '-b',
+        '--banks',
+        help='which bank? (default: %(default)s)',
+        nargs='+',
+        default=initial_args.banks
+    )
+
+    final_parser.add_argument(
         '-p',
         '--paid',
         help='expenses already paid',
@@ -62,7 +45,7 @@ def parse_arguments():
         choices=list(expenses.keys())
     )
 
-    parser.add_argument(
+    final_parser.add_argument(
         '-c',
         '--current-balance',
         help='current balance before expenses',
@@ -70,7 +53,7 @@ def parse_arguments():
         nargs='?'
     )
 
-    # Parse the remaining arguments
-    args = parser.parse_args(remaining_args)
+    # Parse the remaining arguments with the final parser
+    final_args = final_parser.parse_args(unknown_args)
 
-    return args, expenses
+    return final_args

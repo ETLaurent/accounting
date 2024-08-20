@@ -1,0 +1,6 @@
+expenses = {
+    "bank_fees": 25.5,
+    "gym": 50,
+    "newspaper": 13,
+    "spotify": 8.60
+}

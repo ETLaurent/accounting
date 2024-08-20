@@ -5,11 +5,12 @@ from functools import reduce
 
 sys.path.insert(0, './utils')
 
-from cli import parse_arguments
+from cli import get_args
+from banks import get_expenses
 
-args, expenses = parse_arguments()
+args = get_args()
+expenses = get_expenses(args.banks)
 
-# Output expenses in a more readable way
 print('expenses:')
 for expense, amount in expenses.items():
     print(f"  {expense}: {math.ceil(amount)}€")
@@ -19,6 +20,7 @@ if args.paid:
     total_paid = sum(map(lambda paid: math.ceil(expenses[paid]), args.paid))
     print()
     print(f"removing paid expenses for a total of {total_paid}€:")
+
     for expense in args.paid:
         print(f"  {expense}: {math.ceil(expenses[expense])}€")
         expenses.pop(expense)

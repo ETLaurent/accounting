@@ -1,0 +1,6 @@
+expenses = {
+    "bank_fees": 25.5,
+    "energy": 80,
+    "mortgage": 1200,
+    "insurances": 96.70
+}
