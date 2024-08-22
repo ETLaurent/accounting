@@ -125,3 +125,4 @@ balance: -30€
 
 - persist expenses, in order to add, remove and update them via the CLI
 - add the possibility to configure the money sign
+- add unit tests 🙄
