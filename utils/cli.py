@@ -5,48 +5,23 @@ def get_args():
     banks = get_banks()
     all_banks_expenses = get_expenses(banks)
 
-    initial_parser = argparse.ArgumentParser(
-        description='What\'s left in my balance after monthly expenses?'
-    )
-
-    initial_parser.add_argument(
-        '-b',
-        '--banks',
-        help='which banks?',
-        nargs='+',
-        choices=list(banks),
-        default=list(banks)
-    )
-
-    initial_parser.add_argument(
-        '-p',
-        '--paid',
-        help='expenses already paid',
-        nargs='*',
-        default=[],
-        choices=list(all_banks_expenses.keys())
-    )
-
-    initial_parser.add_argument(
-        '-c',
-        '--current-balance',
-        help='current balance before expenses',
-        type=int,
-        nargs='?'
-    )
-
-    # Process known arguments first
-    initial_args = initial_parser.parse_args()
+    # Process known arguments first for help message to
+    # display all arguments correctly
+    initial_args = parse_args(banks, all_banks_expenses)
 
     # Get expenses based on selected banks
     selected_banks_expenses = get_expenses(initial_args.banks)
 
-    # Create a new parser and add all arguments
-    final_parser = argparse.ArgumentParser(
+    # Process arguments again, this time with the selected banks
+    # in order to get the correct choices for the --paid choices
+    return parse_args(banks, selected_banks_expenses)
+
+def parse_args(banks, banks_expenses):
+    parser = argparse.ArgumentParser(
         description='What\'s left in my balance after monthly expenses?'
     )
 
-    final_parser.add_argument(
+    parser.add_argument(
         '-b',
         '--banks',
         help='which banks?',
@@ -55,16 +30,16 @@ def get_args():
         default=list(banks)
     )
 
-    final_parser.add_argument(
+    parser.add_argument(
         '-p',
         '--paid',
         help='expenses already paid',
         nargs='*',
         default=[],
-        choices=list(selected_banks_expenses.keys())
+        choices=list(banks_expenses)
     )
 
-    final_parser.add_argument(
+    parser.add_argument(
         '-c',
         '--current-balance',
         help='current balance before expenses',
@@ -72,4 +47,4 @@ def get_args():
         nargs='?'
     )
 
-    return final_parser.parse_args()
+    return parser.parse_args()
