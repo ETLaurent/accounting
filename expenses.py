@@ -29,9 +29,12 @@ if args.paid:
 remaining_expenses = reduce(lambda x, value: x + math.ceil(value), expenses.values(), 0)
 
 print()
+if args.current_balance:
+    print(f"current balance: {args.current_balance}€")
+
 print(f"remaining expenses: {remaining_expenses}€")
 
 if args.current_balance:
     balance = reduce(lambda x, value: x - math.ceil(value), expenses.values(), args.current_balance)
-    print(f"balance: {balance}€")
+    print(f"remaining balance: {balance}€")
 

@@ -9,7 +9,7 @@ def get_banks():
     banks = {}
 
     for file in files:
-        bank_name = file[:-3]  # Remove the '.py' extension
+        bank_name = file[:-3] # Remove the '.py' extension
         banks[bank_name] = importlib.import_module(bank_name).expenses
 
     return banks

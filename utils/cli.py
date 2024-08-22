@@ -3,6 +3,7 @@ from banks import get_banks, get_expenses
 
 def get_args():
     banks = get_banks()
+    all_banks_expenses = get_expenses(banks)
 
     initial_parser = argparse.ArgumentParser(
         description='What\'s left in my balance after monthly expenses?'
@@ -11,16 +12,34 @@ def get_args():
     initial_parser.add_argument(
         '-b',
         '--banks',
-        help='which bank? (default: %(default)s)',
+        help='which banks?',
         nargs='+',
+        choices=list(banks),
         default=list(banks)
     )
 
-    # Process known arguments first
-    initial_args, unknown_args = initial_parser.parse_known_args()
+    initial_parser.add_argument(
+        '-p',
+        '--paid',
+        help='expenses already paid',
+        nargs='*',
+        default=[],
+        choices=list(all_banks_expenses.keys())
+    )
 
-    # Calculate expenses based on selected banks
-    expenses = get_expenses(initial_args.banks)
+    initial_parser.add_argument(
+        '-c',
+        '--current-balance',
+        help='current balance before expenses',
+        type=int,
+        nargs='?'
+    )
+
+    # Process known arguments first
+    initial_args = initial_parser.parse_args()
+
+    # Get expenses based on selected banks
+    selected_banks_expenses = get_expenses(initial_args.banks)
 
     # Create a new parser and add all arguments
     final_parser = argparse.ArgumentParser(
@@ -30,19 +49,19 @@ def get_args():
     final_parser.add_argument(
         '-b',
         '--banks',
-        help='which bank? (default: %(default)s)',
+        help='which banks?',
         nargs='+',
-        default=initial_args.banks
+        choices=list(banks),
+        default=list(banks)
     )
 
     final_parser.add_argument(
         '-p',
         '--paid',
         help='expenses already paid',
-        metavar='EXPENSE',
         nargs='*',
         default=[],
-        choices=list(expenses.keys())
+        choices=list(selected_banks_expenses.keys())
     )
 
     final_parser.add_argument(
@@ -53,7 +72,4 @@ def get_args():
         nargs='?'
     )
 
-    # Parse the remaining arguments with the final parser
-    final_args = final_parser.parse_args(unknown_args)
-
-    return final_args
+    return final_parser.parse_args()
