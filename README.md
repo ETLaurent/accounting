@@ -1,6 +1,10 @@
 # Accounting
 
-## Check how much is left after recurring expenses 💸
+## Calculate Remaining Balance After Monthly Expenses 💸
+
+### Overview
+
+This script calculates how much is left in your balance after deducting monthly expenses. You can check expenses across multiple banks and exclude already paid expenses.
 
 ### Usage
 
@@ -9,29 +13,33 @@ usage: expenses [-h] [-b {a_bank,another_bank} [{a_bank,another_bank} ...]]
                 [-p [{bank_fees,gym,newspaper,spotify,energy,mortgage,insurances} ...]]
                 [-c [CURRENT_BALANCE]]
 
-What's left in my balance after monthly expenses?
+Determine the remaining balance after monthly expenses.
 
 optional arguments:
   -h, --help            show this help message and exit
   -b {a_bank,another_bank} [{a_bank,another_bank} ...], --banks {a_bank,another_bank} [{a_bank,another_bank} ...]
-                        which banks?
+                        Specify which banks to include in the calculation.
   -p [{bank_fees,gym,newspaper,spotify,energy,mortgage,insurances} ...], --paid [{bank_fees,gym,newspaper,spotify,energy,mortgage,insurances} ...]
-                        expenses already paid
+                        List of expenses that have already been paid.
   -c [CURRENT_BALANCE], --current-balance [CURRENT_BALANCE]
-                        current balance before expenses
+                        Current balance before expenses.
 ```
 
 ### Examples
 
-#### Check remaining expenses
+#### Check Remaining Expenses
 
-- On every banks
+- Across all banks
 
 ```sh
 ./run.py # or:
+./run.py -b a_bank another_bank
 ./run.py --banks a_bank another_bank
+```
 
-# output:
+_Output:_
+
+```
 🏦 expenses:
 
 bank_fees: 51€
@@ -45,9 +53,16 @@ insurances: 97€
 💵 remaining expenses: 1500€
 ```
 
-- On "a_banks"
+- On "a_bank"
 
 ```sh
+./run.py -b a_bank
+./run.py --banks a_bank
+```
+
+_Output:_
+
+```
 🏦 expenses:
 
 bank_fees: 26€
@@ -58,12 +73,16 @@ spotify: 9€
 💵 remaining expenses: 98€
 ```
 
-- On "a_banks" minus expenses already paid
+- On "a_bank" minus paid expenses
 
 ```sh
+./run.py -b a_bank -p gym spotify
 ./run.py --banks a_bank --paid gym spotify
+```
 
-# output:
+_Output:_
+
+```
 🏦 expenses:
 
 bank_fees: 26€
@@ -79,15 +98,18 @@ spotify: 9€
 💵 remaining expenses: 39€
 ```
 
-#### Check balance
+#### Check Balance After Expenses
 
-- On every banks
+- Across all banks
 
 ```sh
-./run.py --current-balance 1200 # or:
-./run.py --current-balance 1200 --banks a_bank another_bank
+./run.py -c 1200
+./run.py --current-balance 1200
+```
 
-# output:
+_Output:_
+
+```
 🏦 expenses:
 
 bank_fees: 51€
@@ -106,9 +128,13 @@ insurances: 97€
 - On "another_bank"
 
 ```sh
+./run.py -c 1200 -b another_bank
 ./run.py --current-balance 1200 --banks another_bank
+```
 
-# output:
+_Output:_
+
+```
 🏦 expenses:
 
 bank_fees: 26€
@@ -121,12 +147,16 @@ insurances: 97€
 😭 remaining balance: -203€
 ```
 
-- On "another_banks" minus expenses already paid
+- On "another_bank" minus paid expenses
 
 ```sh
+./run.py -c 1200 -b another_bank -p energy mortgage
 ./run.py --current-balance 1200 --banks another_bank --paid energy mortgage
+```
 
-# output:
+_Output:_
+
+```
 🏦 expenses:
 
 bank_fees: 26€
@@ -146,6 +176,6 @@ mortgage: 1200€
 
 ### TODO
 
-- persist expenses, in order to add, remove and update them via the CLI
-- add the possibility to configure the money sign
-- add unit tests 🙄
+- Persist expenses to allow adding, removing, and updating them via the CLI.
+- Add the option to configure the currency symbol.
+- Implement unit tests 🙄

@@ -18,13 +18,13 @@ def get_args():
 
 def parse_args(banks, banks_expenses):
     parser = argparse.ArgumentParser(
-        description='What\'s left in my balance after monthly expenses?'
+        description='Determine the remaining balance after monthly expenses.'
     )
 
     parser.add_argument(
         '-b',
         '--banks',
-        help='which banks?',
+        help='Specify which banks to include in the calculation.',
         nargs='+',
         choices=list(banks),
         default=list(banks)
@@ -33,7 +33,7 @@ def parse_args(banks, banks_expenses):
     parser.add_argument(
         '-p',
         '--paid',
-        help='expenses already paid',
+        help='List of expenses that have already been paid.',
         nargs='*',
         default=[],
         choices=list(banks_expenses)
@@ -42,7 +42,7 @@ def parse_args(banks, banks_expenses):
     parser.add_argument(
         '-c',
         '--current-balance',
-        help='current balance before expenses',
+        help='Current balance before expenses.',
         type=int,
         nargs='?'
     )
