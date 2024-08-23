@@ -2,10 +2,14 @@ import sys
 import os
 import importlib
 
-sys.path.insert(0, './banks')
+# meh, this is a bit hacky,
+# but it works... we get the banks from the banks directory
+script_dir = os.path.dirname(os.path.realpath(__file__))
+bank_dir = os.path.join(script_dir, '../banks')
+sys.path.insert(0, bank_dir)
 
 def get_banks():
-    files = [f for f in os.listdir('./banks') if f.endswith('.py')]
+    files = [f for f in os.listdir(bank_dir) if f.endswith('.py')]
     banks = {}
 
     for file in files:

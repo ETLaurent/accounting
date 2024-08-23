@@ -1,12 +1,9 @@
 #!/usr/bin/python3
-import sys
 import math
 from functools import reduce
 
-sys.path.insert(0, './utils')
-
-from cli import get_args
-from banks import get_expenses
+from utils.cli import get_args
+from utils.banks import get_expenses
 
 args = get_args()
 expenses = get_expenses(args.banks)

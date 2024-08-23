@@ -1,5 +1,5 @@
 import argparse
-from banks import get_banks, get_expenses
+from utils.banks import get_banks, get_expenses
 
 def get_args():
     banks = get_banks()
