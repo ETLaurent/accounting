@@ -46,9 +46,9 @@ if expenses:
     print_transactions(
         expenses,
         args.paid,
-        lambda expense, amount: f"📈 {expense}: {math.ceil(amount)}€",
+        lambda expense, amount: f"📈 {expense}: -{math.ceil(amount)}€",
         lambda total_paid: f"😇 total paid: {total_paid}€",
-        lambda total_remaining: f"😒 total remaining: {total_remaining}€"
+        lambda total_remaining: f"😒 total remaining: -{total_remaining}€"
     )
 
 if expenses and incomes:
@@ -62,7 +62,7 @@ if incomes:
         args.received,
         lambda income, amount: f"📉 {income}: +{math.ceil(amount)}€",
         lambda total_received: f"😈 total received: {total_received}€",
-        lambda total_remaining: f"🥲 total remaining: {total_remaining}€"
+        lambda total_remaining: f"🥲 total remaining: +{total_remaining}€"
     )
 
 if args.current_balance:
