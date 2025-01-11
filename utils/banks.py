@@ -14,21 +14,31 @@ def get_banks():
 
     for file in files:
         bank_name = file[:-3] # Remove the '.py' extension
-        banks[bank_name] = importlib.import_module(bank_name).expenses
+        banks[bank_name] = importlib.import_module(bank_name)
 
     return banks
 
-def get_expenses(selected_banks):
+def get_transactions(selected_banks):
     banks = get_banks()
+
     expenses = {}
+    incomes = {}
 
-    for bank in selected_banks:
-        if bank in banks:
-            for expense, amount in banks[bank].items():
-                if expense in expenses:
-                    # If the expense already exists, add the amount
-                    expenses[expense] += amount
-                else:
-                    expenses[expense] = amount
+    # if the expense/income already exists, add up the amount
+    for bank_name in selected_banks:
+        if bank_name in banks:
+            bank = banks[bank_name]
 
-    return expenses
+            bank_expenses = getattr(bank, "expenses", {})
+            bank_incomes = getattr(bank, "incomes", {})
+
+            for expense, amount in bank_expenses.items():
+                expenses[expense] = expenses.get(expense, 0) + amount
+
+            for income, amount in bank_incomes.items():
+                incomes[income] = incomes.get(income, 0) + amount
+
+    return {
+        "expenses": expenses,
+        "incomes": incomes
+    }

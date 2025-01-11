@@ -4,3 +4,7 @@ expenses = {
     "mortgage": 1200,
     "insurances": 96.70
 }
+income = {
+    "salary": 2000,
+    "rent": 550
+}

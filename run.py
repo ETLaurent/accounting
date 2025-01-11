@@ -3,10 +3,13 @@ import math
 from functools import reduce
 
 from utils.cli import get_args
-from utils.banks import get_expenses
+from utils.banks import get_transactions
 
 args = get_args()
-expenses = get_expenses(args.banks)
+transactions = get_transactions(args.banks)
+
+expenses = transactions["expenses"]
+incomes = transactions["incomes"]
 
 print('🏦 expenses:')
 print()
