@@ -29,7 +29,20 @@ def get_args():
 
 def parse_args(banks, transactions, currencies):
     parser = argparse.ArgumentParser(
-        description='Determine the remaining balance after monthly transactions.'
+        description='Determine the remaining balance after monthly transactions.',
+        formatter_class=argparse.RawTextHelpFormatter
+    )
+
+    parser.add_argument(
+        '-c',
+        '--currency',
+        help=f'''Specify a currency symbol or provide a name to get the corresponding symbol (e.g "￥" or "yen").
+Adding a leading underscore will place the currency before the amounts (e.g providing "_euro" will print "foo: +10€" instead of "foo: +€10".
+Below is a list of supported currency names. A partial name (such as "yen") will be matched to one from that list.
+If the given currency cannot be matched, it will be used as-is.
+{sorted(currencies.keys())}''',
+        nargs='?',
+        default='DOLLAR SIGN'
     )
 
     parser.add_argument(
@@ -65,16 +78,6 @@ def parse_args(banks, transactions, currencies):
         help='Current balance before transactions.',
         type=int,
         nargs='?'
-    )
-
-    parser.add_argument(
-        '-c',
-        '--currency',
-        help=f'''Use a specific currency.
-        Example: pass "€" or write "euro" to find the corresponding symbol among:
-        {sorted(currencies.keys())}''',
-        nargs='?',
-        default='DOLLAR SIGN'
     )
 
     return parser.parse_args()
