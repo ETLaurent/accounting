@@ -177,5 +177,6 @@ mortgage: 1200€
 ### TODO
 
 - Persist expenses to allow adding, removing, and updating them via the CLI.
-- Add the option to configure the currency symbol.
+- Implement param to add expense (-e, --expense) and income (-i, --income) on the fly
 - Implement unit tests 🙄
+- Publish package
