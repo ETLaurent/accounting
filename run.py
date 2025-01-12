@@ -5,7 +5,6 @@ from functools import reduce
 
 from utils.cli import get_args
 from utils.banks import get_transactions, process_transactions
-from utils.string import strikethrough
 
 args = get_args()
 transactions = get_transactions(args.banks)

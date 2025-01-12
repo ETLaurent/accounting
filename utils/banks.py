@@ -2,7 +2,9 @@ import sys
 import os
 import importlib
 import math
+
 from functools import reduce
+from utils.string import strikethrough
 
 # meh, this is a bit hacky,
 # but it works... we get the banks from the banks directory
