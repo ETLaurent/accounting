@@ -20,7 +20,7 @@ def get_currency(currency):
     found = next(
         (
             currency_name
-            for currency_name in sorted(currencies.keys())
+            for currency_name in currencies.keys()
             if currency.casefold() in currency_name.casefold()
         ),
         None
