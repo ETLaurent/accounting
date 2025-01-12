@@ -56,7 +56,7 @@ def process_transactions(
     get_remaining_message
 ):
     if additional_amounts:
-        expenses_or_incomes['additional amount 💸'] = sum(additional_amounts)
+        expenses_or_incomes['ADDITIONAL AMOUNT 💸'] = sum(additional_amounts)
 
     for expense_or_income, amount in expenses_or_incomes.items():
         message = get_transaction_message(expense_or_income, amount)
