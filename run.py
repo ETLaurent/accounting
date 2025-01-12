@@ -6,7 +6,6 @@ from functools import reduce
 from utils.cli import get_args
 from utils.banks import get_transactions, process_transactions
 from utils.string import strikethrough
-from utils.currency import get_currency
 
 args = get_args()
 transactions = get_transactions(args.banks)
@@ -19,9 +18,9 @@ currency_after = ""
 
 if args.currency:
     if args.currency.startswith("_"):
-        currency_after = get_currency(args.currency.replace("_", ""))
+        currency_after = args.currency.replace("_", "")
     else:
-        currency_before = get_currency(args.currency)
+        currency_before = args.currency
 
 if expenses:
     print("🔥 Expenses 🔥")
@@ -75,7 +74,10 @@ if args.current_balance:
         "￥":   "💴"
     }
 
-    current_emoji = current_emoji_map[currency_before or currency_after]
+    current_emoji = current_emoji_map.get(
+        currency_before or currency_after,
+        "💵"
+    )
     remaining_emoji = "🤑" if balance > 0 else "😭"
 
     print()

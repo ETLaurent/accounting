@@ -1,48 +1,33 @@
 import argparse
 
 from utils.banks import get_banks, get_transactions
-from utils.currency import get_currencies
 
 def get_args():
     banks = get_banks()
     banks_transactions = get_transactions(banks)
-    currencies = get_currencies()
 
     # Process known arguments first for help message to
     # display all arguments correctly
-    initial_args = parse_args(
-        banks,
-        banks_transactions,
-        currencies
-    )
+    initial_args = parse_args(banks, banks_transactions)
 
     # Get transactions based on selected banks
     selected_banks_transactions = get_transactions(initial_args.banks)
 
     # Process arguments again, this time with the selected banks
     # in order to get the correct choices for the --paid and --received choices
-    return parse_args(
-        banks,
-        selected_banks_transactions,
-        currencies
-    )
+    return parse_args(banks, selected_banks_transactions)
 
-def parse_args(banks, transactions, currencies):
+def parse_args(banks, transactions):
     parser = argparse.ArgumentParser(
-        description="Determine the remaining balance after monthly transactions.",
-        formatter_class=argparse.RawTextHelpFormatter
+        description="Determine the remaining balance after monthly transactions."
     )
 
     parser.add_argument(
         '-c',
         '--currency',
-        help=f'''Currency symbol, or corresponding name (e.g "￥", or "yen" to get "￥").
-Adding a leading underscore will place the currency before the amounts (e.g providing "_euro" will print "foo: +10€" instead of "foo: +€10".
-Below is a list of supported currency names. A partial name (such as "yen") will be matched to one from that list.
-If the given currency cannot be matched, it will be used as-is.
-{sorted(currencies.keys())}''',
+        help='Currency symbol (e.g "￥", "€"...). Adding a leading underscore will place the currency before the amounts (e.g specifying "_€" will print "foo: +10€" instead of "foo: +€10".',
         nargs='?',
-        default='DOLLAR SIGN'
+        default='$'
     )
 
     parser.add_argument(
