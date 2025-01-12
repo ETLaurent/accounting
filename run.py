@@ -4,37 +4,9 @@ import math
 from functools import reduce
 
 from utils.cli import get_args
-from utils.banks import get_transactions
+from utils.banks import get_transactions, process_transactions
 from utils.string import strikethrough
 from utils.currency import get_currency
-
-def print_transactions(
-    transactions,
-    paid_or_received,
-    get_transaction_message,
-    get_total_message,
-    get_remaining_message
-):
-    for transaction, amount in transactions.items():
-        message = get_transaction_message(transaction, amount)
-
-        if transaction in paid_or_received:
-            print(f"  {strikethrough(message)}")
-        else:
-            print(f"  {message}")
-
-    print()
-
-    if transactions and paid_or_received:
-        total_paid_or_received = sum(map(lambda paid: math.ceil(transactions[paid]), paid_or_received))
-        print(f"  {get_total_message(total_paid_or_received)}")
-
-        for transaction in paid_or_received:
-            transactions.pop(transaction)
-
-    total_remaining = reduce(lambda x, value: x + math.ceil(value), transactions.values(), 0)
-    print(f"  {get_remaining_message(total_remaining)}")
-
 
 args = get_args()
 transactions = get_transactions(args.banks)
@@ -54,7 +26,7 @@ if args.currency:
 if expenses:
     print("🔥 Expenses 🔥")
     print()
-    print_transactions(
+    process_transactions(
         expenses,
         args.paid,
         lambda expense, amount: f"📈 {expense}: -{currency_before}{math.ceil(amount)}{currency_after}",
@@ -68,7 +40,7 @@ if expenses and incomes:
 if incomes:
     print("💧 Income 💧")
     print()
-    print_transactions(
+    process_transactions(
         incomes,
         args.received,
         lambda income, amount: f"📉 {income}: +{currency_before}{math.ceil(amount)}{currency_after}",

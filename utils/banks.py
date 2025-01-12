@@ -1,6 +1,8 @@
 import sys
 import os
 import importlib
+import math
+from functools import reduce
 
 # meh, this is a bit hacky,
 # but it works... we get the banks from the banks directory
@@ -42,3 +44,40 @@ def get_transactions(selected_banks):
         "expenses": expenses,
         "incomes": incomes
     }
+
+def process_transactions(
+    expenses_or_incomes,
+    paid_or_received,
+    get_transaction_message,
+    get_total_message,
+    get_remaining_message
+):
+    for expenses_or_income, amount in expenses_or_incomes.items():
+        message = get_transaction_message(expenses_or_income, amount)
+
+        if expenses_or_income in paid_or_received:
+            print(f"  {strikethrough(message)}")
+        else:
+            print(f"  {message}")
+
+    print()
+
+    if expenses_or_incomes and paid_or_received:
+        total_paid_or_received = sum(
+            map(
+                lambda paid: math.ceil(expenses_or_incomes[paid]),
+                paid_or_received
+            )
+        )
+        print(f"  {get_total_message(total_paid_or_received)}")
+
+        for expenses_or_income in paid_or_received:
+            expenses_or_incomes.pop(expenses_or_income)
+
+    total_remaining = reduce(
+        lambda x,
+        value: x + math.ceil(value),
+        expenses_or_incomes.values(),
+        0
+    )
+    print(f"  {get_remaining_message(total_remaining)}")
