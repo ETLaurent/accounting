@@ -19,13 +19,15 @@ def get_args():
 
 def parse_args(banks, transactions):
     parser = argparse.ArgumentParser(
-        description="Determine the remaining balance after monthly transactions."
+        description="Determine the remaining balance after monthly transactions.",
+        formatter_class=argparse.RawTextHelpFormatter
     )
 
     parser.add_argument(
         '-c',
         '--currency',
-        help='Currency symbol (e.g "￥", "€"...). Adding a leading underscore will place the currency before the amounts (e.g specifying "_€" will print "foo: +10€" instead of "foo: +€10".',
+        help='''Currency symbol to show. Adding a leading underscore will place the symbol before the amount.
+For instance, "_€" will print "foo: +10€" instead of "foo: +€10".''',
         nargs='?',
         default='$'
     )
