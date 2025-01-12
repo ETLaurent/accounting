@@ -2,6 +2,7 @@ import argparse
 
 from utils.banks import get_banks, get_transactions
 
+
 def get_args():
     banks = get_banks()
     banks_transactions = get_transactions(banks)
@@ -16,6 +17,7 @@ def get_args():
     # Process arguments again, this time with the selected banks
     # in order to get the correct choices for the --paid and --received choices
     return parse_args(banks, selected_banks_transactions)
+
 
 def parse_args(banks, transactions):
     parser = argparse.ArgumentParser(

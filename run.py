@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-import unicodedata
 import math
-from functools import reduce
 
 from utils.cli import get_args
 from utils.banks import get_transactions, process_transactions
@@ -56,14 +54,14 @@ if args.current_balance:
     minus_sign = "-" if balance < 0 else ""
 
     currency_emojis = {
-        "$" :   "💵",
+        "$":    "💵",
         "＄":   "💵",
         "﹩":   "💵",
-        "€" :   "💶",
-        "₠" :   "💶",
-        "£" :   "💷",
+        "€":    "💶",
+        "₠":    "💶",
+        "£":    "💷",
         "￡":   "💷",
-        "¥" :   "💴",
+        "¥":    "💴",
         "￥":   "💴"
     }
 
@@ -83,4 +81,3 @@ if args.current_balance:
         f"{f' + {remaining_income}' if remaining_income else ''}"
         f" = {minus_sign}{currency_before}{abs(balance)}{currency_after}"
     )
-
