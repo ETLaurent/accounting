@@ -16,11 +16,10 @@ currency_after = ""
 remaining_expenses = 0
 remaining_income = 0
 
-if args.currency:
-    if args.currency.startswith("_"):
-        currency_after = args.currency.replace("_", "")
-    else:
-        currency_before = args.currency
+if args.currency.startswith("_"):
+    currency_after = args.currency.replace("_", "")
+else:
+    currency_before = args.currency
 
 if expenses or args.additional_expense_amounts:
     print("🔥 Expenses 🔥")
