@@ -36,7 +36,7 @@ if expenses or args.additional_expense_amounts:
         args.additional_expense_amounts,
         lambda expense, amount: f"📈 {expense}: -{price(math.ceil(amount))}",
         lambda paid: f"😇 total paid: {price(paid)}",
-        lambda remaining: f"😒 total remaining: -{price(remaining)}"
+        lambda remaining: f"😒 total remaining: -{price(remaining)}",
     )
 
 if (expenses or args.additional_expense_amounts) and (incomes or args.additional_income_amounts):
@@ -51,7 +51,7 @@ if incomes or args.additional_income_amounts:
         args.additional_income_amounts,
         lambda income, amount: f"📉 {income}: +{price(math.ceil(amount))}",
         lambda received: f"😈 total received: {price(received)}",
-        lambda remaining: f"🥲 total remaining: +{price(remaining)}"
+        lambda remaining: f"🥲 total remaining: +{price(remaining)}",
     )
 
 if args.current_balance:
@@ -59,15 +59,10 @@ if args.current_balance:
     minus_sign = "-" if balance < 0 else ""
 
     currency_emojis = {
-        "$":    "💵",
-        "＄":   "💵",
-        "﹩":   "💵",
-        "€":    "💶",
-        "₠":    "💶",
-        "£":    "💷",
-        "￡":   "💷",
-        "¥":    "💴",
-        "￥":   "💴"
+        "$": "💵",
+        "€": "💶",
+        "£": "💷",
+        "¥": "💴",
     }
     current_emoji = currency_emojis.get(currency_before or currency_after, "💵")
     remaining_emoji = "🤑" if balance > 0 else "😭"

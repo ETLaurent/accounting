@@ -46,7 +46,7 @@ def get_transactions(selected_banks):
 
     return {
         "expenses": expenses,
-        "incomes": incomes
+        "incomes": incomes,
     }
 
 
