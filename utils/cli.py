@@ -29,14 +29,14 @@ def get_args():
 
 def parse_args(banks, transactions, currencies):
     parser = argparse.ArgumentParser(
-        description='Determine the remaining balance after monthly transactions.',
+        description="Determine the remaining balance after monthly transactions.",
         formatter_class=argparse.RawTextHelpFormatter
     )
 
     parser.add_argument(
         '-c',
         '--currency',
-        help=f'''Specify a currency symbol or provide a name to get the corresponding symbol (e.g "￥" or "yen").
+        help=f'''Currency symbol, or corresponding name (e.g "￥", or "yen" to get "￥").
 Adding a leading underscore will place the currency before the amounts (e.g providing "_euro" will print "foo: +10€" instead of "foo: +€10".
 Below is a list of supported currency names. A partial name (such as "yen") will be matched to one from that list.
 If the given currency cannot be matched, it will be used as-is.
@@ -48,34 +48,52 @@ If the given currency cannot be matched, it will be used as-is.
     parser.add_argument(
         '-a',
         '--banks',
-        help='Specify which banks to include in the calculation.',
+        help="Banks to use in the calculation.",
         nargs='+',
-        default=list(banks),
-        choices=list(banks)
+        default=banks,
+        choices=banks
     )
 
     parser.add_argument(
         '-p',
         '--paid',
-        help='List of expenses that have already been paid.',
+        help="Expense names to be removed from the calculation.",
         nargs='*',
         default=[],
-        choices=list(transactions["expenses"])
+        choices=transactions["expenses"]
     )
 
     parser.add_argument(
         '-r',
         '--received',
-        help='List of income sources that have already been received.',
+        help="Income names to be removed from the calculation.",
         nargs='*',
         default=[],
-        choices=list(transactions["incomes"])
+        choices=transactions["incomes"]
+    )
+
+    parser.add_argument(
+        '-e',
+        '--additional-expenses',
+        help="Expense amounts to add to the calculation.",
+        type=int,
+        nargs="*",
+        default=[]
+    )
+
+    parser.add_argument(
+        '-i',
+        '--additional-income',
+        help="Income amounts to add to the calculation.",
+        type=int,
+        nargs="*",
+        default=[]
     )
 
     parser.add_argument(
         '-b',
         '--current-balance',
-        help='Current balance before transactions.',
+        help="Current balance before calculation.",
         type=int,
         nargs='?'
     )
