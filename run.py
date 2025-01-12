@@ -23,17 +23,17 @@ def print_transactions(
         else:
             print(f"  {message}")
 
-    if transactions and paid_or_received:
-        print()
+    print()
 
+    if transactions and paid_or_received:
         total_paid_or_received = sum(map(lambda paid: math.ceil(transactions[paid]), paid_or_received))
         print(f"  {get_total_message(total_paid_or_received)}")
 
         for transaction in paid_or_received:
             transactions.pop(transaction)
 
-        total_remaining = reduce(lambda x, value: x + math.ceil(value), transactions.values(), 0)
-        print(f"  {get_remaining_message(total_remaining)}")
+    total_remaining = reduce(lambda x, value: x + math.ceil(value), transactions.values(), 0)
+    print(f"  {get_remaining_message(total_remaining)}")
 
 
 args = get_args()
