@@ -15,16 +15,19 @@ incomes = transactions["incomes"]
 currency_before = ""
 currency_after = ""
 
+remaining_expenses = 0
+remaining_income = 0
+
 if args.currency:
     if args.currency.startswith("_"):
         currency_after = args.currency.replace("_", "")
     else:
         currency_before = args.currency
 
-if expenses:
+if expenses or args.additional_expense_amounts:
     print("🔥 Expenses 🔥")
     print()
-    process_transactions(
+    remaining_expenses = process_transactions(
         expenses,
         args.paid,
         args.additional_expense_amounts,
@@ -33,13 +36,13 @@ if expenses:
         lambda remaining: f"😒 total remaining: -{currency_before}{remaining}{currency_after}"
     )
 
-if expenses and incomes:
+if (expenses or args.additional_expense_amounts) and (incomes or args.additional_income_amounts):
     print()
 
-if incomes:
+if incomes or args.additional_income_amounts:
     print("💧 Income 💧")
     print()
-    process_transactions(
+    remaining_income = process_transactions(
         incomes,
         args.received,
         args.additional_income_amounts,
@@ -49,17 +52,8 @@ if incomes:
     )
 
 if args.current_balance:
-    balance = reduce(
-        lambda x,
-        value: x + math.ceil(value),
-        incomes.values(),
-        reduce(
-            lambda x,
-            value: x - math.ceil(value),
-            expenses.values(),
-            args.current_balance
-        )
-    )
+    balance = args.current_balance - remaining_expenses + remaining_income
+    minus_sign = "-" if balance < 0 else ""
 
     currency_emojis = {
         "$" :   "💵",
@@ -83,5 +77,10 @@ if args.current_balance:
     print("⚖️ Balance ⚖️")
     print()
     print(f"  {current_emoji} current: {currency_before}{args.current_balance}{currency_after}")
-    print(f"  {remaining_emoji} remaining: {currency_before}{balance}{currency_after}")
+    print(
+        f"  {remaining_emoji} remaining: {args.current_balance}"
+        f"{f' - {remaining_expenses}' if remaining_expenses else ''}"
+        f"{f' + {remaining_income}' if remaining_income else ''}"
+        f" = {minus_sign}{currency_before}{abs(balance)}{currency_after}"
+    )
 

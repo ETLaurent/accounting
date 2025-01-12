@@ -56,6 +56,8 @@ def process_transactions(
     get_remaining_message
 ):
     if additional_amounts:
+        if not expenses_or_incomes:
+            expenses_or_incomes = {}
         expenses_or_incomes['ADDITIONAL AMOUNT 💸'] = sum(additional_amounts)
 
     for expense_or_income, amount in expenses_or_incomes.items():
@@ -87,3 +89,5 @@ def process_transactions(
         0
     )
     print(f"  {get_remaining_message(total_remaining)}")
+
+    return total_remaining

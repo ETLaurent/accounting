@@ -189,5 +189,4 @@ mortgage: 1200€
 TODO v3:
 
 MAJ Readme
-expense bin --> accounting
 Python basics and good practices
