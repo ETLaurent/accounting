@@ -6,6 +6,12 @@
 
 This script calculates how much is left in your balance after deducting monthly expenses. You can check expenses across multiple banks and exclude already paid expenses.
 
+### Note
+
+Wrote in Python because it's wildly included by default in most of Linux and macOS systems.
+
+It's also a good occasion to ~use~ learn Python, meaning that the code might not be state-of-the-art, far from it.
+
 ### Usage
 
 ```
