@@ -62,10 +62,25 @@ if args.current_balance:
             args.current_balance
         )
     )
-    emoji = "🤑" if balance > 0 else "😭"
+
+    current_emoji_map = {
+        "$":    "💵",
+        "＄":   "💵",
+        "﹩":   "💵",
+        "€":    "💶",
+        "₠":    "💶",
+        "£":    "💷",
+        "￡":   "💷",
+        "¥":    "💴",
+        "￥":   "💴"
+    }
+
+    current_emoji = current_emoji_map[currency_before or currency_after]
+    remaining_emoji = "🤑" if balance > 0 else "😭"
+
     print()
     print("⚖️ Balance ⚖️")
     print()
-    print(f"  💵 current: {currency_before}{args.current_balance}{currency_after}")
-    print(f"  {emoji} remaining: {currency_before}{balance}{currency_after}")
+    print(f"  {current_emoji} current: {currency_before}{args.current_balance}{currency_after}")
+    print(f"  {remaining_emoji} remaining: {currency_before}{balance}{currency_after}")
 
