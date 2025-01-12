@@ -30,7 +30,7 @@ def parse_args(banks, transactions):
         '--currency',
         help='''Currency symbol to show. Adding a leading underscore will place the symbol before the amount.
 For instance, "_€" will print "foo: +10€" instead of "foo: +€10".''',
-        required=True,
+        nargs='?',
         default='$'
     )
 
