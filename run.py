@@ -29,9 +29,10 @@ if expenses:
     process_transactions(
         expenses,
         args.paid,
+        args.additional_expense_amounts,
         lambda expense, amount: f"📈 {expense}: -{currency_before}{math.ceil(amount)}{currency_after}",
-        lambda total_paid: f"😇 total paid: {currency_before}{total_paid}{currency_after}",
-        lambda total_remaining: f"😒 total remaining: -{currency_before}{total_remaining}{currency_after}"
+        lambda paid: f"😇 total paid: {currency_before}{paid}{currency_after}",
+        lambda remaining: f"😒 total remaining: -{currency_before}{remaining}{currency_after}"
     )
 
 if expenses and incomes:
@@ -43,9 +44,10 @@ if incomes:
     process_transactions(
         incomes,
         args.received,
+        args.additional_income_amounts,
         lambda income, amount: f"📉 {income}: +{currency_before}{math.ceil(amount)}{currency_after}",
-        lambda total_received: f"😈 total received: {currency_before}{total_received}{currency_after}",
-        lambda total_remaining: f"🥲 total remaining: +{currency_before}{total_remaining}{currency_after}"
+        lambda received: f"😈 total received: {currency_before}{received}{currency_after}",
+        lambda remaining: f"🥲 total remaining: +{currency_before}{remaining}{currency_after}"
     )
 
 if args.current_balance:
@@ -64,6 +66,6 @@ if args.current_balance:
     print()
     print("⚖️ Balance ⚖️")
     print()
-    print(f"  💸 current: {currency_before}{args.current_balance}{currency_after}")
+    print(f"  💵 current: {currency_before}{args.current_balance}{currency_after}")
     print(f"  {emoji} remaining: {currency_before}{balance}{currency_after}")
 

@@ -48,14 +48,18 @@ def get_transactions(selected_banks):
 def process_transactions(
     expenses_or_incomes,
     paid_or_received,
+    additional_amounts,
     get_transaction_message,
     get_total_message,
     get_remaining_message
 ):
-    for expenses_or_income, amount in expenses_or_incomes.items():
-        message = get_transaction_message(expenses_or_income, amount)
+    if additional_amounts:
+        expenses_or_incomes['additional amount 💸'] = sum(additional_amounts)
 
-        if expenses_or_income in paid_or_received:
+    for expense_or_income, amount in expenses_or_incomes.items():
+        message = get_transaction_message(expense_or_income, amount)
+
+        if expense_or_income in paid_or_received:
             print(f"  {strikethrough(message)}")
         else:
             print(f"  {message}")
@@ -71,8 +75,8 @@ def process_transactions(
         )
         print(f"  {get_total_message(total_paid_or_received)}")
 
-        for expenses_or_income in paid_or_received:
-            expenses_or_incomes.pop(expenses_or_income)
+        for expense_or_income in paid_or_received:
+            expenses_or_incomes.pop(expense_or_income)
 
     total_remaining = reduce(
         lambda x,

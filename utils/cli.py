@@ -74,7 +74,7 @@ If the given currency cannot be matched, it will be used as-is.
 
     parser.add_argument(
         '-e',
-        '--additional-expenses',
+        '--additional-expense-amounts',
         help="Expense amounts to add to the calculation.",
         type=int,
         nargs="*",
@@ -83,7 +83,7 @@ If the given currency cannot be matched, it will be used as-is.
 
     parser.add_argument(
         '-i',
-        '--additional-income',
+        '--additional-income-amounts',
         help="Income amounts to add to the calculation.",
         type=int,
         nargs="*",
