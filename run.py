@@ -61,7 +61,7 @@ if args.current_balance:
         )
     )
 
-    current_emoji_map = {
+    currency_emojis = {
         "$" :   "💵",
         "＄":   "💵",
         "﹩":   "💵",
@@ -73,7 +73,7 @@ if args.current_balance:
         "￥":   "💴"
     }
 
-    current_emoji = current_emoji_map.get(
+    current_emoji = currency_emojis.get(
         currency_before or currency_after,
         "💵"
     )
