@@ -1,181 +1,241 @@
 # Accounting
 
-## Calculate Remaining Balance After Monthly Expenses 💸
+## Calculate Remaining Balance After Monthly Transactions 💸
 
 ### Overview
 
-This script calculates how much is left in your balance after deducting monthly expenses. You can check expenses across multiple banks and exclude already paid expenses.
+This script calculates how much is left in your balance after deducting monthly expenses.
+
+### Notes
+
+> App is written in Python because it's wildly included by default in most of Linux and macOS systems.  
+> It's also a good occasion for me to ~use~ learn Python (code isn't state-of-the-art, far from it).  
+> It's a CLI usage, there is no web server, to keep it simple. However, persistence would be a good thing, and is the next milestone.
 
 ### Usage
 
 ```
-usage: expenses [-h] [-b {a_bank,another_bank} [{a_bank,another_bank} ...]]
-                [-p [{bank_fees,gym,newspaper,spotify,energy,mortgage,insurances} ...]]
-                [-c [CURRENT_BALANCE]]
+usage: run.py [-h] [-c [CURRENCY]] [-a {a_bank,another_bank} [{a_bank,another_bank} ...]]
+              [-p [{bank_fees,gym,newspaper,spotify,energy,mortgage,insurances} ...]]
+              [-r [{salary,rent} ...]]
+              [-e [ADDITIONAL_EXPENSE_AMOUNTS ...]]
+              [-i [ADDITIONAL_INCOME_AMOUNTS ...]] [-b [CURRENT_BALANCE]]
 
-Determine the remaining balance after monthly expenses.
+Determine the remaining balance after monthly transactions.
 
 optional arguments:
   -h, --help            show this help message and exit
-  -b {a_bank,another_bank} [{a_bank,another_bank} ...], --banks {a_bank,another_bank} [{a_bank,another_bank} ...]
-                        Specify which banks to include in the calculation.
+  -c [CURRENCY], --currency [CURRENCY]
+                        Currency symbol to show. Adding a leading underscore will place the symbol before the amount.
+                        For instance, "_€" will print "foo: +10€" instead of "foo: +€10".
+  -a {a_bank,another_bank} [{a_bank,another_bank} ...], --banks {a_bank,another_bank} [{a_bank,another_bank} ...]
+                        Banks to use in the calculation.
   -p [{bank_fees,gym,newspaper,spotify,energy,mortgage,insurances} ...], --paid [{bank_fees,gym,newspaper,spotify,energy,mortgage,insurances} ...]
-                        List of expenses that have already been paid.
-  -c [CURRENT_BALANCE], --current-balance [CURRENT_BALANCE]
-                        Current balance before expenses.
+                        Expense names to be removed from the calculation.
+  -r [{salary,rent} ...], --received [{salary,rent} ...]
+                        Income names to be removed from the calculation.
+  -e [ADDITIONAL_EXPENSE_AMOUNTS ...], --additional-expense-amounts [ADDITIONAL_EXPENSE_AMOUNTS ...]
+                        Expense amounts to add to the calculation.
+  -i [ADDITIONAL_INCOME_AMOUNTS ...], --additional-income-amounts [ADDITIONAL_INCOME_AMOUNTS ...]
+                        Income amounts to add to the calculation.
+  -b [CURRENT_BALANCE], --current-balance [CURRENT_BALANCE]
+                        Current balance before calculation.
 ```
 
 ### Examples
 
-#### Check Remaining Expenses
-
-- Across all banks
+#### Check Balance for a Specific Bank
 
 ```sh
-./run.py # or:
-./run.py -b a_bank another_bank
-./run.py --banks a_bank another_bank
+./run.py --current-balance 1200 --banks a_bank --paid gym 
 ```
 
 _Output:_
 
 ```
-🏦 expenses:
+🔥 Expenses 🔥
 
-bank_fees: 51€
-gym: 50€
-newspaper: 13€
-spotify: 9€
-energy: 80€
-mortgage: 1200€
-insurances: 97€
+  📈 bank_fees: -$26
+  📈̶ ̶g̶y̶m̶:̶ ̶-̶$̶5̶0̶
+  📈 newspaper: -$13
+  📈 spotify: -$9
 
-💵 remaining expenses: 1500€
+  😇 total paid: $50
+  😒 total remaining: -$48
+
+⚖️ Balance ⚖️
+
+  💵 current: $1200
+  🤑 remaining: 1200 - 48 = $1152
 ```
 
-- On "a_bank"
+#### Show all Remaining Expenses and Income
 
 ```sh
-./run.py -b a_bank
-./run.py --banks a_bank
+./run.py --paid gym spotify --received rent
 ```
 
 _Output:_
 
 ```
-🏦 expenses:
+🔥 Expenses 🔥
 
-bank_fees: 26€
-gym: 50€
-newspaper: 13€
-spotify: 9€
+  📈 bank_fees: -$51
+  📈̶ ̶g̶y̶m̶:̶ ̶-̶$̶5̶0̶
+  📈 newspaper: -$13
+  📈̶ ̶s̶p̶o̶t̶i̶f̶y̶:̶ ̶-̶$̶9̶
+  📈 energy: -$80
+  📈 mortgage: -$1200
+  📈 insurances: -$97
 
-💵 remaining expenses: 98€
+  😇 total paid: $59
+  😒 total remaining: -$1441
+
+💧 Income 💧
+
+  📉 salary: +$2000
+  📉̶ ̶r̶e̶n̶t̶:̶ ̶+̶$̶5̶5̶0̶
+
+  😈 total received: $550
+  🥲 total remaining: +$2000
 ```
 
-- On "a_bank" minus paid expenses
+#### Add additional Income and Expenses
 
 ```sh
-./run.py -b a_bank -p gym spotify
-./run.py --banks a_bank --paid gym spotify
+./run.py --additional-expense-amounts 95 4 6 --additional-income-amounts 790 10
 ```
 
 _Output:_
 
 ```
-🏦 expenses:
+🔥 Expenses 🔥
 
-bank_fees: 26€
-gym: 50€
-newspaper: 13€
-spotify: 9€
+  📈 bank_fees: -$51
+  📈 gym: -$50
+  📈 newspaper: -$13
+  📈 spotify: -$9
+  📈 energy: -$80
+  📈 mortgage: -$1200
+  📈 insurances: -$97
+  📈 ADDITIONAL AMOUNT 💸: -$105
 
-💸 removing paid expenses for a total of 59€:
+  😒 total remaining: -$1605
 
-gym: 50€
-spotify: 9€
+💧 Income 💧
 
-💵 remaining expenses: 39€
+  📉 salary: +$2000
+  📉 rent: +$550
+  📉 ADDITIONAL AMOUNT 💸: +$800
+
+  🥲 total remaining: +$3350
 ```
 
-#### Check Balance After Expenses
-
-- Across all banks
+#### Specify a Currency
 
 ```sh
-./run.py -c 1200
-./run.py --current-balance 1200
+./run.py --currency ₹
 ```
 
 _Output:_
 
 ```
-🏦 expenses:
+🔥 Expenses 🔥
 
-bank_fees: 51€
-gym: 50€
-newspaper: 13€
-spotify: 9€
-energy: 80€
-mortgage: 1200€
-insurances: 97€
+  📈 bank_fees: -₹51
+  📈 gym: -₹50
+  📈 newspaper: -₹13
+  📈 spotify: -₹9
+  📈 energy: -₹80
+  📈 mortgage: -₹1200
+  📈 insurances: -₹97
 
-💰 current balance: 1200€
-💵 remaining expenses: 1500€
-😭 remaining balance: -300€
+  😒 total remaining: -₹1500
+
+💧 Income 💧
+
+  📉 salary: +₹2000
+  📉 rent: +₹550
+
+  🥲 total remaining: +₹2550
 ```
 
-- On "another_bank"
+#### Specify a Trailing Currency
 
 ```sh
-./run.py -c 1200 -b another_bank
-./run.py --current-balance 1200 --banks another_bank
+./run.py --currency _€
 ```
 
 _Output:_
 
 ```
-🏦 expenses:
+🔥 Expenses 🔥
 
-bank_fees: 26€
-energy: 80€
-mortgage: 1200€
-insurances: 97€
+  📈 bank_fees: -51€
+  📈 gym: -50€
+  📈 newspaper: -13€
+  📈 spotify: -9€
+  📈 energy: -80€
+  📈 mortgage: -1200€
+  📈 insurances: -97€
 
-💰 current balance: 1200€
-💵 remaining expenses: 1403€
-😭 remaining balance: -203€
+  😒 total remaining: -1500€
+
+💧 Income 💧
+
+  📉 salary: +2000€
+  📉 rent: +550€
+
+  🥲 total remaining: +2550€
 ```
 
-- On "another_bank" minus paid expenses
+#### Mix All the Things
 
 ```sh
-./run.py -c 1200 -b another_bank -p energy mortgage
-./run.py --current-balance 1200 --banks another_bank --paid energy mortgage
+./run.py \
+    --currency _€ \
+    --current-balance 1200 \
+    --banks a_bank another_bank \
+    --paid gym spotify \
+    --received rent \
+    --additional-expense-amounts 95 4 6 \
+    --additional-income-amounts 790 10
 ```
 
 _Output:_
 
 ```
-🏦 expenses:
+🔥 Expenses 🔥
 
-bank_fees: 26€
-energy: 80€
-mortgage: 1200€
-insurances: 97€
+  📈 bank_fees: -51€
+  📈̶ ̶g̶y̶m̶:̶ ̶-̶5̶0̶€̶
+  📈 newspaper: -13€
+  📈̶ ̶s̶p̶o̶t̶i̶f̶y̶:̶ ̶-̶9̶€̶
+  📈 energy: -80€
+  📈 mortgage: -1200€
+  📈 insurances: -97€
+  📈 ADDITIONAL AMOUNT 💸: -105€
 
-💸 removing paid expenses for a total of 1280€:
+  😇 total paid: 59€
+  😒 total remaining: -1546€
 
-energy: 80€
-mortgage: 1200€
+💧 Income 💧
 
-💰 current balance: 1200€
-💵 remaining expenses: 123€
-🤑 remaining balance: 1077€
+  📉 salary: +2000€
+  📉̶ ̶r̶e̶n̶t̶:̶ ̶+̶5̶5̶0̶€̶
+  📉 ADDITIONAL AMOUNT 💸: +800€
+
+  😈 total received: 550€
+  🥲 total remaining: +2800€
+
+⚖️ Balance ⚖️
+
+  💶 current: 1200€
+  🤑 remaining: 1200 - 1546 - 2800 = 2454€
 ```
 
 ### TODO
 
 - Persist expenses to allow adding, removing, and updating them via the CLI.
-- Add the option to configure the currency symbol.
 - Implement unit tests 🙄
+- Publish package

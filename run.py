@@ -1,40 +1,78 @@
 #!/usr/bin/python3
 import math
-from functools import reduce
 
 from utils.cli import get_args
-from utils.banks import get_expenses
+from utils.banks import get_transactions, process_transactions
 
 args = get_args()
-expenses = get_expenses(args.banks)
+transactions = get_transactions(args.banks)
 
-print('🏦 expenses:')
-print()
-for expense, amount in expenses.items():
-    print(f"{expense}: {math.ceil(amount)}€")
+expenses = transactions["expenses"]
+incomes = transactions["incomes"]
 
-# Remove already-paid expenses
-if args.paid:
-    total_paid = sum(map(lambda paid: math.ceil(expenses[paid]), args.paid))
+currency_before = ""
+currency_after = ""
+
+remaining_expenses = 0
+remaining_income = 0
+
+if args.currency:
+    if args.currency.startswith("_"):
+        currency_after = args.currency.replace("_", "")
+    else:
+        currency_before = args.currency
+
+
+def price(amount):
+    return f"{currency_before}{amount}{currency_after}"
+
+
+if expenses or args.additional_expense_amounts:
+    print("🔥 Expenses 🔥")
     print()
-    print(f"💸 removing paid expenses for a total of {total_paid}€:")
+    remaining_expenses = process_transactions(
+        expenses,
+        args.paid,
+        args.additional_expense_amounts,
+        lambda expense, amount: f"📈 {expense}: -{price(math.ceil(amount))}",
+        lambda paid: f"😇 total paid: {price(paid)}",
+        lambda remaining: f"😒 total remaining: -{price(remaining)}",
+    )
+
+if (expenses or args.additional_expense_amounts) and (incomes or args.additional_income_amounts):
     print()
 
-    for expense in args.paid:
-        print(f"{expense}: {math.ceil(expenses[expense])}€")
-        expenses.pop(expense)
+if incomes or args.additional_income_amounts:
+    print("💧 Income 💧")
+    print()
+    remaining_income = process_transactions(
+        incomes,
+        args.received,
+        args.additional_income_amounts,
+        lambda income, amount: f"📉 {income}: +{price(math.ceil(amount))}",
+        lambda received: f"😈 total received: {price(received)}",
+        lambda remaining: f"🥲 total remaining: +{price(remaining)}",
+    )
 
-# Calculate total expenses and current balance
-remaining_expenses = reduce(lambda x, value: x + math.ceil(value), expenses.values(), 0)
-
-print()
 if args.current_balance:
-    print(f"💰 current balance: {args.current_balance}€")
+    balance = args.current_balance - remaining_expenses + remaining_income
+    minus_sign = "-" if balance < 0 else ""
 
-print(f"💵 remaining expenses: {remaining_expenses}€")
+    currency_emojis = {
+        "$": "💵",
+        "€": "💶",
+        "£": "💷",
+        "¥": "💴",
+    }
+    current_emoji = currency_emojis.get(currency_before or currency_after, "💵")
+    remaining_emoji = "🤑" if balance > 0 else "😭"
 
-if args.current_balance:
-    balance = reduce(lambda x, value: x - math.ceil(value), expenses.values(), args.current_balance)
-    emoji = "🤑" if balance > 0 else "😭"
-    print(f"{emoji} remaining balance: {balance}€")
+    remaining_expenses_message = f" - {remaining_expenses}" if remaining_expenses else ""
+    remaining_income_message = f" - {remaining_income}" if remaining_income else ""
+    calculation = f"\033[3m{args.current_balance}{remaining_expenses_message}{remaining_income_message}\033[0m"
 
+    print()
+    print("⚖️ Balance ⚖️")
+    print()
+    print(f"  {current_emoji} current: {price(args.current_balance)}")
+    print(f"  {remaining_emoji} remaining: {calculation} = {minus_sign}{price(abs(balance))}")
