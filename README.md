@@ -134,7 +134,7 @@ _Output:_
 #### Specify a Currency
 
 ```sh
-/run.py --currency ¥
+./run.py --currency ₹
 ```
 
 _Output:_
@@ -142,22 +142,22 @@ _Output:_
 ```
 🔥 Expenses 🔥
 
-  📈 bank_fees: -¥51
-  📈 gym: -¥50
-  📈 newspaper: -¥13
-  📈 spotify: -¥9
-  📈 energy: -¥80
-  📈 mortgage: -¥1200
-  📈 insurances: -¥97
+  📈 bank_fees: -₹51
+  📈 gym: -₹50
+  📈 newspaper: -₹13
+  📈 spotify: -₹9
+  📈 energy: -₹80
+  📈 mortgage: -₹1200
+  📈 insurances: -₹97
 
-  😒 total remaining: -¥1500
+  😒 total remaining: -₹1500
 
 💧 Income 💧
 
-  📉 salary: +¥2000
-  📉 rent: +¥550
+  📉 salary: +₹2000
+  📉 rent: +₹550
 
-  🥲 total remaining: +¥2550
+  🥲 total remaining: +₹2550
 ```
 
 #### Specify a Trailing Currency
