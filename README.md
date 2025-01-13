@@ -6,13 +6,11 @@
 
 This script calculates how much is left in your balance after deducting monthly expenses.
 
-### Note
+### Notes
 
-App is written in Python because it's wildly included by default in most of Linux and macOS systems.
-
-It's also a good occasion for me to ~use~ learn Python (code isn't state-of-the-art, far from it).
-
-It's a CLI usage, there is no web server, to keep it simple. However, persistence would be a good thing, and is the next milestone.
+> App is written in Python because it's wildly included by default in most of Linux and macOS systems.  
+> It's also a good occasion for me to ~use~ learn Python (code isn't state-of-the-art, far from it).  
+> It's a CLI usage, there is no web server, to keep it simple. However, persistence would be a good thing, and is the next milestone.
 
 ### Usage
 
