@@ -44,6 +44,8 @@ optional arguments:
 
 ### Examples
 
+> Note: ANSI terminals will support dim, bold and italic style which are not showed in the following examples.
+
 #### Check Balance for a Specific Bank
 
 ```sh
@@ -55,18 +57,18 @@ _Output:_
 ```
 🔥 Expenses 🔥
 
-  📈 bank_fees: -$26
-  📈̶ ̶g̶y̶m̶:̶ ̶-̶$̶5̶0̶
-  📈 newspaper: -$13
-  📈 spotify: -$9
+    📈 bank_fees: -$26
+    📈̶ ̶g̶y̶m̶:̶ ̶-̶$̶5̶0̶
+    📈 newspaper: -$13
+    📈 spotify: -$9
 
-  😇 total paid: $50
-  😒 total remaining: -$48
+    😇 total paid: $50
+    😒 total remaining: -$48
 
 ⚖️ Balance ⚖️
 
-  💵 current: $1200
-  🤑 remaining: 1200 - 48 = $1152
+    💵 current: $1200
+    🤑 remaining: $1200 -$48 = $1152
 ```
 
 #### Show all Remaining Expenses and Income
@@ -80,24 +82,24 @@ _Output:_
 ```
 🔥 Expenses 🔥
 
-  📈 bank_fees: -$51
-  📈̶ ̶g̶y̶m̶:̶ ̶-̶$̶5̶0̶
-  📈 newspaper: -$13
-  📈̶ ̶s̶p̶o̶t̶i̶f̶y̶:̶ ̶-̶$̶9̶
-  📈 energy: -$80
-  📈 mortgage: -$1200
-  📈 insurances: -$97
+    📈 bank_fees: -$51
+    📈̶ ̶g̶y̶m̶:̶ ̶-̶$̶5̶0̶
+    📈 newspaper: -$13
+    📈̶ ̶s̶p̶o̶t̶i̶f̶y̶:̶ ̶-̶$̶9̶
+    📈 energy: -$80
+    📈 mortgage: -$1200
+    📈 insurances: -$97
 
-  😇 total paid: $59
-  😒 total remaining: -$1441
+    😇 total paid: $59
+    😒 total remaining: -$1441
 
 💧 Income 💧
 
-  📉 salary: +$2000
-  📉̶ ̶r̶e̶n̶t̶:̶ ̶+̶$̶5̶5̶0̶
+    📉 salary: +$2000
+    📉̶ ̶r̶e̶n̶t̶:̶ ̶+̶$̶5̶5̶0̶
 
-  😈 total received: $550
-  🥲 total remaining: +$2000
+    😈 total received: $550
+    🥲 total remaining: +$2000
 ```
 
 #### Add additional Income and Expenses
@@ -111,24 +113,24 @@ _Output:_
 ```
 🔥 Expenses 🔥
 
-  📈 bank_fees: -$51
-  📈 gym: -$50
-  📈 newspaper: -$13
-  📈 spotify: -$9
-  📈 energy: -$80
-  📈 mortgage: -$1200
-  📈 insurances: -$97
-  📈 ADDITIONAL AMOUNT 💸: -$105
+    📈 bank_fees: -$51
+    📈 gym: -$50
+    📈 newspaper: -$13
+    📈 spotify: -$9
+    📈 energy: -$80
+    📈 mortgage: -$1200
+    📈 insurances: -$97
+    📈 ADDITIONAL AMOUNT 💸: -$105
 
-  😒 total remaining: -$1605
+    😒 total remaining: -$1605
 
 💧 Income 💧
 
-  📉 salary: +$2000
-  📉 rent: +$550
-  📉 ADDITIONAL AMOUNT 💸: +$800
+    📉 salary: +$2000
+    📉 rent: +$550
+    📉 ADDITIONAL AMOUNT 💸: +$800
 
-  🥲 total remaining: +$3350
+    🥲 total remaining: +$3350
 ```
 
 #### Specify a Currency
@@ -142,22 +144,22 @@ _Output:_
 ```
 🔥 Expenses 🔥
 
-  📈 bank_fees: -₹51
-  📈 gym: -₹50
-  📈 newspaper: -₹13
-  📈 spotify: -₹9
-  📈 energy: -₹80
-  📈 mortgage: -₹1200
-  📈 insurances: -₹97
+    📈 bank_fees: -₹51
+    📈 gym: -₹50
+    📈 newspaper: -₹13
+    📈 spotify: -₹9
+    📈 energy: -₹80
+    📈 mortgage: -₹1200
+    📈 insurances: -₹97
 
-  😒 total remaining: -₹1500
+    😒 total remaining: -₹1500
 
 💧 Income 💧
 
-  📉 salary: +₹2000
-  📉 rent: +₹550
+    📉 salary: +₹2000
+    📉 rent: +₹550
 
-  🥲 total remaining: +₹2550
+    🥲 total remaining: +₹2550
 ```
 
 #### Specify a Trailing Currency
@@ -171,22 +173,22 @@ _Output:_
 ```
 🔥 Expenses 🔥
 
-  📈 bank_fees: -51€
-  📈 gym: -50€
-  📈 newspaper: -13€
-  📈 spotify: -9€
-  📈 energy: -80€
-  📈 mortgage: -1200€
-  📈 insurances: -97€
+    📈 bank_fees: -51€
+    📈 gym: -50€
+    📈 newspaper: -13€
+    📈 spotify: -9€
+    📈 energy: -80€
+    📈 mortgage: -1200€
+    📈 insurances: -97€
 
-  😒 total remaining: -1500€
+    😒 total remaining: -1500€
 
 💧 Income 💧
 
-  📉 salary: +2000€
-  📉 rent: +550€
+    📉 salary: +2000€
+    📉 rent: +550€
 
-  🥲 total remaining: +2550€
+    🥲 total remaining: +2550€
 ```
 
 #### Mix All the Things
@@ -207,31 +209,31 @@ _Output:_
 ```
 🔥 Expenses 🔥
 
-  📈 bank_fees: -51€
-  📈̶ ̶g̶y̶m̶:̶ ̶-̶5̶0̶€̶
-  📈 newspaper: -13€
-  📈̶ ̶s̶p̶o̶t̶i̶f̶y̶:̶ ̶-̶9̶€̶
-  📈 energy: -80€
-  📈 mortgage: -1200€
-  📈 insurances: -97€
-  📈 ADDITIONAL AMOUNT 💸: -105€
+    📈 bank_fees: -51€
+    📈̶ ̶g̶y̶m̶:̶ ̶-̶5̶0̶€̶
+    📈 newspaper: -13€
+    📈̶ ̶s̶p̶o̶t̶i̶f̶y̶:̶ ̶-̶9̶€̶
+    📈 energy: -80€
+    📈 mortgage: -1200€
+    📈 insurances: -97€
+    📈 ADDITIONAL AMOUNT 💸: -105€
 
-  😇 total paid: 59€
-  😒 total remaining: -1546€
+    😇 total paid: 59€
+    😒 total remaining: -1546€
 
 💧 Income 💧
 
-  📉 salary: +2000€
-  📉̶ ̶r̶e̶n̶t̶:̶ ̶+̶5̶5̶0̶€̶
-  📉 ADDITIONAL AMOUNT 💸: +800€
+    📉 salary: +2000€
+    📉̶ ̶r̶e̶n̶t̶:̶ ̶+̶5̶5̶0̶€̶
+    📉 ADDITIONAL AMOUNT 💸: +800€
 
-  😈 total received: 550€
-  🥲 total remaining: +2800€
+    😈 total received: 550€
+    🥲 total remaining: +2800€
 
-⚖️ Balance ⚖️
+    ⚖️ Balance ⚖️
 
-  💶 current: 1200€
-  🤑 remaining: 1200 - 1546 - 2800 = 2454€
+    💶 current: 1200€
+    🤑 remaining: 1200 -$1546 +$2800 = 2454€
 ```
 
 ### TODO
