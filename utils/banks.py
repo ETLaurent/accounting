@@ -4,7 +4,7 @@ import importlib
 import math
 
 from functools import reduce
-from utils.string import strikethrough, italic
+from utils.string import dim, italic
 
 # meh, this is a bit hacky,
 # but it works... we get the banks from the banks directory
@@ -69,7 +69,7 @@ def process_transactions(
         message = get_transaction_message(expense_or_income, amount)
 
         if expense_or_income in paid_or_received:
-            print(f"    {strikethrough(message)}")
+            print(f"    {dim(message)}")
         else:
             print(f"    {message}")
 

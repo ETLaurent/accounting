@@ -1,14 +1,14 @@
+def style(text, ansi_code):
+    return ''.join(ansi_code + c + '\033[0m' for c in text)
+
+
 def bold(text):
-    return ''.join('\033[1m' + c + '\033[0m' for c in text)
+    return style(text, '\033[1m')
 
 
 def dim(text):
-    return ''.join('\033[2m' + c + '\033[0m' for c in text)
+    return style(text, '\033[2m')
 
 
 def italic(text):
-    return ''.join('\033[3m' + c + '\033[0m' for c in text)
-
-
-def strikethrough(text):
-    return ''.join(c + '\u0336' for c in text)
+    return style(text, '\033[3m')
