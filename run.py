@@ -4,14 +4,15 @@ import math
 from utils.cli import get_args
 from utils.banks import get_transactions, process_transactions
 from utils.string import italic
-from utils.currency import get_price_fn, strip
+from utils.currency import strip, get_price_fn, get_currency_emoji
 
 args = get_args()
 
 currency = strip(args.currency)
 price = get_price_fn(args.currency)
-transactions = get_transactions(args.banks)
+currency_emoji = get_currency_emoji(args.currency)
 
+transactions = get_transactions(args.banks)
 expenses = transactions["expenses"]
 incomes = transactions["incomes"]
 
@@ -49,13 +50,6 @@ if args.current_balance or args.current_balance == 0:
     balance = args.current_balance - remaining_expenses + remaining_income
     minus_sign = "-" if balance < 0 else ""
 
-    currency_emojis = {
-        "$": "💵",
-        "€": "💶",
-        "£": "💷",
-        "¥": "💴",
-    }
-    current_emoji = currency_emojis.get(currency, "💵")
     remaining_emoji = "🤑" if balance > 0 else "😭"
 
     remaining_expenses_message = f" -{remaining_expenses}" if remaining_expenses else ""
@@ -65,5 +59,5 @@ if args.current_balance or args.current_balance == 0:
     print()
     print("⚖️ Balance ⚖️")
     print()
-    print(f"    {current_emoji} current: {price(args.current_balance)}")
+    print(f"    {currency_emoji} current: {price(args.current_balance)}")
     print(f"    {remaining_emoji} remaining: {italic(calculation)} = {minus_sign}{price(abs(balance))}")
