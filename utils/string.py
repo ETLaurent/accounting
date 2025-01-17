@@ -11,7 +11,7 @@ def supports_ansi():
 
 def style(text, ansi_code):
     if supports_ansi():
-        return ''.join(ansi_code + c + '\033[0m' for c in text)
+        return ''.join(ansi_code + char + '\033[0m' for char in text)
     return text
 
 
@@ -20,7 +20,9 @@ def bold(text):
 
 
 def dim(text):
-    return style(text, '\033[2m')
+    if supports_ansi():
+        return style(text, '\033[2m')
+    return ''.join(char + '\u0336' for char in text)
 
 
 def italic(text):
