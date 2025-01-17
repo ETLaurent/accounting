@@ -4,7 +4,7 @@ import importlib
 import math
 
 from functools import reduce
-from utils.string import strikethrough
+from utils.string import strikethrough, italic
 
 # meh, this is a bit hacky,
 # but it works... we get the banks from the banks directory
@@ -61,7 +61,9 @@ def process_transactions(
     if additional_amounts:
         if not expenses_or_incomes:
             expenses_or_incomes = {}
-        expenses_or_incomes['ADDITIONAL AMOUNT 💸'] = sum(additional_amounts)
+
+        key = f"{italic('ADDITIONAL AMOUNT')} 💸"
+        expenses_or_incomes[key] = sum(additional_amounts)
 
     for expense_or_income, amount in expenses_or_incomes.items():
         message = get_transaction_message(expense_or_income, amount)
