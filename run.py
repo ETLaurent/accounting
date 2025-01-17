@@ -52,12 +52,12 @@ if args.current_balance or args.current_balance == 0:
 
     remaining_emoji = "🤑" if balance > 0 else "😭"
 
-    remaining_expenses_message = f" -{remaining_expenses}" if remaining_expenses else ""
-    remaining_income_message = f" +{remaining_income}" if remaining_income else ""
-    calculation = f"{args.current_balance}{remaining_expenses_message}{remaining_income_message}"
+    remaining_expenses_message = f" -{price(remaining_expenses)}" if remaining_expenses else ""
+    remaining_income_message = f" +{price(remaining_income)}" if remaining_income else ""
+    calculation = f"{price(args.current_balance)}{remaining_expenses_message}{remaining_income_message}"
 
     print()
     print("⚖️ Balance ⚖️")
     print()
     print(f"    {currency_emoji} current: {price(args.current_balance)}")
-    print(f"    {remaining_emoji} remaining: {italic(calculation)} = {minus_sign}{price(abs(balance))}")
+    print(f"    {remaining_emoji} remaining: {calculation} = {minus_sign}{price(abs(balance))}")
