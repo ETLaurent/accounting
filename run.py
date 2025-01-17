@@ -68,7 +68,7 @@ if args.current_balance:
     remaining_emoji = "🤑" if balance > 0 else "😭"
 
     remaining_expenses_message = f" - {remaining_expenses}" if remaining_expenses else ""
-    remaining_income_message = f" - {remaining_income}" if remaining_income else ""
+    remaining_income_message = f" + {remaining_income}" if remaining_income else ""
     calculation = f"\033[3m{args.current_balance}{remaining_expenses_message}{remaining_income_message}\033[0m"
 
     print()
