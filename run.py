@@ -75,5 +75,5 @@ if args.current_balance or args.current_balance == 0:
     print()
     print("⚖️ Balance ⚖️")
     print()
-    print(f"  {current_emoji} current: {price(args.current_balance)}")
-    print(f"  {remaining_emoji} remaining: {italic(calculation)} = {minus_sign}{price(abs(balance))}")
+    print(f"    {current_emoji} current: {price(args.current_balance)}")
+    print(f"    {remaining_emoji} remaining: {italic(calculation)} = {minus_sign}{price(abs(balance))}")

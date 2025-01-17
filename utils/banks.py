@@ -67,9 +67,9 @@ def process_transactions(
         message = get_transaction_message(expense_or_income, amount)
 
         if expense_or_income in paid_or_received:
-            print(f"  {strikethrough(message)}")
+            print(f"    {strikethrough(message)}")
         else:
-            print(f"  {message}")
+            print(f"    {message}")
 
     print()
 
@@ -80,7 +80,7 @@ def process_transactions(
                 paid_or_received
             )
         )
-        print(f"  {get_total_message(total_paid_or_received)}")
+        print(f"    {get_total_message(total_paid_or_received)}")
 
         for expense_or_income in paid_or_received:
             expenses_or_incomes.pop(expense_or_income)
@@ -91,6 +91,6 @@ def process_transactions(
         expenses_or_incomes.values(),
         0
     )
-    print(f"  {get_remaining_message(total_remaining)}")
+    print(f"    {get_remaining_message(total_remaining)}")
 
     return total_remaining
