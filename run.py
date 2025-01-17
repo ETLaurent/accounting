@@ -4,29 +4,19 @@ import math
 from utils.cli import get_args
 from utils.banks import get_transactions, process_transactions
 from utils.string import italic
+from utils.currency import get_price_fn, strip
 
 args = get_args()
+
+currency = strip(args.currency)
+price = get_price_fn(args.currency)
 transactions = get_transactions(args.banks)
 
 expenses = transactions["expenses"]
 incomes = transactions["incomes"]
 
-currency_before = ""
-currency_after = ""
-
 remaining_expenses = 0
 remaining_income = 0
-
-if args.currency:
-    if args.currency.startswith("_"):
-        currency_after = args.currency.replace("_", "")
-    else:
-        currency_before = args.currency
-
-
-def price(amount):
-    return f"{currency_before}{amount}{currency_after}"
-
 
 if expenses or args.additional_expense_amounts:
     print("🔥 Expenses 🔥")
@@ -65,7 +55,7 @@ if args.current_balance or args.current_balance == 0:
         "£": "💷",
         "¥": "💴",
     }
-    current_emoji = currency_emojis.get(currency_before or currency_after, "💵")
+    current_emoji = currency_emojis.get(currency, "💵")
     remaining_emoji = "🤑" if balance > 0 else "😭"
 
     remaining_expenses_message = f" -{remaining_expenses}" if remaining_expenses else ""
