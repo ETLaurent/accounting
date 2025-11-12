@@ -241,3 +241,13 @@ _Output:_
 - Persist expenses to allow adding, removing, and updating them via the CLI.
 - Implement unit tests 🙄
 - Publish package
+- Add labels:
+
+```py
+incomes = {
+    "bbr" = {
+        "label": "BBR Salary",
+        "amount": 3200.00
+    }
+}
+```
